@@ -23,10 +23,11 @@ const fetchProduct = async() => {
 const productDisplay = async() => {
     await fetchProduct();
 
-    /*sans le .map pour ne pas aller chercher une url particulière */
-    document.getElementsByClassName("item__img").innerHTML = `
-    <img  src="${product.imageUrl}" alt="image d'un canapé ${product.colors}" />
-    `;
+    /*appel au parent pour l'insertions des éléments*/
+
+    let item = document.querySelector(".item");
+    item.querySelector(".item__img").insertAdjacentHTML("afterbegin", `<img src="${productData.imageUrl}" alt="Photographie d'un canapé ${product.name}">`);
+
 };
 
 productDisplay();
