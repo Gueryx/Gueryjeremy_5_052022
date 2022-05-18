@@ -23,10 +23,23 @@ const fetchProduct = async() => {
 const productDisplay = async() => {
     await fetchProduct();
 
-    /*appel au parent pour l'insertions des éléments*/
+    /*appel au parent pour l'insertions des éléments ci-dessous*/
 
     let item = document.querySelector(".item");
+
+    /*ajout image dynamique */
     item.querySelector(".item__img").insertAdjacentHTML("afterbegin", `<img src="${productData.imageUrl}" alt="Photographie d'un canapé ${product.name}">`);
+
+    /*ajout nom du produit dynamique - en majuscule*/
+    item.querySelector("#title").insertAdjacentHTML("afterbegin", `${productData.name.toUpperCase()}`);
+
+    /*ajout du prix dynamique*/
+    item.querySelector("#price").insertAdjacentHTML("afterbegin", `<span>${productData.price.toString().replace(/0$/,"")} </span>`);
+
+    /*ajout description produit dynamique*/
+    item.querySelector("#description").insertAdjacentHTML("afterbegin", `${productData.description}`);
+
+
 
 };
 
