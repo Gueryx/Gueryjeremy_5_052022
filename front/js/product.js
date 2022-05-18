@@ -56,7 +56,7 @@ const addBasket = () => {
     document.querySelector("#addToCart").addEventListener("click", function() {
 
 
-        /*ajout variable pour dans le local storage des données du produit */
+        /*ajout variable pour avoir dans le local storage des données du produit */
         let productBoard = JSON.parse(localStorage.getItem("product"));
         console.log(productBoard);
 
