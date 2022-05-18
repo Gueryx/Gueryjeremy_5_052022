@@ -28,7 +28,7 @@ const productDisplay = async() => {
     let item = document.querySelector(".item");
 
     /*ajout image dynamique */
-    item.querySelector(".item__img").insertAdjacentHTML("afterbegin", `<img src="${productData.imageUrl}" alt="Photographie d'un canapé ${product.name}">`);
+    item.querySelector(".item__img").insertAdjacentHTML("afterbegin", `<img src="${productData.imageUrl}" alt="Photographie d'un canapé ${productData.name}">`);
 
     /*ajout nom du produit dynamique - en majuscule*/
     item.querySelector("#title").insertAdjacentHTML("afterbegin", `${productData.name.toUpperCase()}`);
@@ -56,20 +56,29 @@ const addBasket = () => {
     document.querySelector("#addToCart").addEventListener("click", function() {
 
 
-        /*ajout variable pour avoir dans le local storage des données du produit */
+        /*ajouts variables pour avoir dans le local storage des données du produit selectionnées*/
         let productBoard = JSON.parse(localStorage.getItem("product"));
-        console.log(productBoard);
+        let selectColor = document.getElementById("colors");
+        let selectQuantity = document.getElementById("quantity");
+
+        /*assigner des options à un objet ci-dessous */
+        const finalProduct = Object.assign({}, productData, {
+            colorChoice: `${selectColor.value}`,
+            quantityColorChoice: 1,
+            quantityChoice: `${selectQuantity.value}`,
+        });
+        /*récap du produit choisi ci-dessous*/
+        console.log(finalProduct);
+
 
         /*si le resultat est "null" alors.... */
         if (productBoard == null) {
             /*sous forme de tableau ci-dessous */
             productBoard = [];
-            productBoard.push(productData);
+            productBoard.push(finalProduct);
             console.log(productBoard);
             /*stockage des infos dans le localStorage ci-dessous */
             localStorage.setItem("product", JSON.stringify(productBoard));
         }
     });
 };
-
-//14 14
