@@ -39,8 +39,37 @@ const productDisplay = async() => {
     /*ajout description produit dynamique*/
     item.querySelector("#description").insertAdjacentHTML("afterbegin", `${productData.description}`);
 
+    /*ajout des options des couleurs dynamique*/
+    item.querySelector("#colors").insertAdjacentHTML("beforeend", productData.colors.map(color => `<option value="${color}">${color}</option>`).join());
 
+    addBasket(productData);
 
-};
+}
 
 productDisplay();
+
+
+const addBasket = () => {
+    console.log(productData._id); /*test pour ravoir l'id */
+
+    /*si on click sur "Ajouter au panier alors .... */
+    document.querySelector("#addToCart").addEventListener("click", function() {
+
+
+        /*selection de la couleur */
+        let productBoard = JSON.parse(localStorage.getItem("product"));
+        console.log(productBoard);
+
+        /*si le resultat est "null" alors.... */
+        if (productBoard == null) {
+            /*sous forme de tableau ci-dessous */
+            productBoard = [];
+            productBoard.push(productData);
+            console.log(productBoard);
+            /*stockage des infos dans le localStorage ci-dessous */
+            localStorage.setItem("product", JSON.stringify(productBoard));
+        }
+    });
+};
+
+//14 14
