@@ -62,11 +62,13 @@ const addBasket = () => {
         let selectQuantity = document.getElementById("quantity");
 
         /*assigner des options à un objet ci-dessous */
-        const finalProduct = Object.assign({}, productData, {
+
+        const finalProduct = {
+            id: productData._id,
             colorChoice: `${selectColor.value}`,
-            quantityColorChoice: 1,
             quantityChoice: `${selectQuantity.value}`,
-        });
+        };
+
         /*récap du produit choisi ci-dessous*/
         console.log(finalProduct);
 
