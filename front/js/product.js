@@ -67,6 +67,9 @@ const addBasket = () => {
             id: productData._id,
             colorChoice: `${selectColor.value}`,
             quantityChoice: `${selectQuantity.value}`,
+            imageUrl: productData.imageUrl,
+            name: productData.name,
+            price: productData.price,
         };
 
         /*récap du produit choisi ci-dessous*/
@@ -81,6 +84,8 @@ const addBasket = () => {
             console.log(productBoard);
             /*stockage des infos dans le localStorage ci-dessous */
             localStorage.setItem("product", JSON.stringify(productBoard));
+            /*ouvrir la page panier, une fois ajouté au panier */
+            window.location.assign("cart.html");
         }
     });
 };
