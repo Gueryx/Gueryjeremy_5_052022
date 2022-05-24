@@ -6,6 +6,13 @@ const cartDisplay = async() => {
         await addProduct;
         console.log(addProduct);
 
+        /*appel au parent pour l'insertions des éléments ci-dessous*/
+        let quantityTotal = document.querySelector(".cart__price");
+        /*ajout quantité dynamique */
+        quantityTotal.querySelector("#totalQuantity").insertAdjacentHTML("afterbegin", `<span>${addProduct.quantityChoice}</span>`);
+        quantityTotal.querySelector("#totalPrice").insertAdjacentHTML("afterbegin", `<span>${addProduct.quantityChoice * addProduct.price}</span>`);
+
+
         cart__items.innerHTML = addProduct.map((product) => `
         
         <article class="cart__item" data-id="${product.id}" data-color="${product.colorChoice}">
@@ -29,12 +36,14 @@ const cartDisplay = async() => {
           </div>
         </div>
       </article>
+
+      <div class="cart__price">
+        <p>Total (<span id="totalQuantity">${product.quantityChoice}</span> articles) : <span id="totalPrice">${product.quantityChoice * product.price.toString().replace(/00/,"")}</span> €</p>
+      </div>
     
          `);
 
-        // let qty = document.querySelector(".cart__price");
 
-        // qty.querySelector("#totalQuantity").insertAdjacentHTML("afterbegin", `${product.quantityChoice}`);
 
     } else {
         order.addEventListener("click", () => {
