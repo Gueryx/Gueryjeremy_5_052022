@@ -64,7 +64,7 @@ const addBasket = () => {
         /*assigner des options à un objet ci-dessous */
 
         const finalProduct = {
-            id: productData._id,
+            _id: productData._id,
             colorChoice: `${selectColor.value}`,
             quantityChoice: `${selectQuantity.value}`,
             imageUrl: productData.imageUrl,
@@ -85,7 +85,30 @@ const addBasket = () => {
             /*stockage des infos dans le localStorage ci-dessous */
             localStorage.setItem("product", JSON.stringify(productBoard));
             /*ouvrir la page panier, une fois ajouté au panier */
-            window.location.assign("cart.html");
+            //window.location.assign("cart.html");
+
+            /*si le tableau n'est pas égale alors */
+        } else if (productBoard != null) {
+            for (i = 0; i < productBoard.length; i++) {
+                console.log("test");
+
+                /*si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué */
+                if (
+                    productBoard[i]._id == productData._id &&
+                    productBoard[i].colors == productData.colorChoice
+                ) {
+                    return (
+                        productBoard[i].quantityChoice++,
+                        console.log("quantityChoice++"),
+                        localStorage.setItem("product", JSON.stringify(productBoard)),
+                        /*nouveau tableau dans le local storage à jour*/
+                        (productBoard = JSON.parse(localStorage.getItem("product")))
+                    );
+                }
+            }
         }
     });
+
+    /*récupérer les valeurs ajouté dans le produit tableau */
+    return (productBoard = JSON.parse(localStorage.getItem("product")));
 };
