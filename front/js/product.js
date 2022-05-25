@@ -95,13 +95,29 @@ const addBasket = () => {
                 /*si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué */
                 if (
                     productBoard[i]._id == productData._id &&
-                    productBoard[i].colors == productData.colorChoice
+                    productBoard[i].colorChoice == selectColor.value
                 ) {
+                    //ERREUR QUAND ON VEUT EN AJOUTER PLUSIEUR AVEC UN CHIFFRE DE 1 -100, 
+                    //CA EN AJOUTE QUE 1 A LA FOIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     return (
                         productBoard[i].quantityChoice++,
                         console.log("quantityChoice++"),
                         localStorage.setItem("product", JSON.stringify(productBoard)),
                         /*nouveau tableau dans le local storage à jour*/
+                        (productBoard = JSON.parse(localStorage.getItem("product")))
+                    );
+                }
+            }
+            /*Si il on le même id mais pas la même couleur alors c'est un autre produit */
+            for (i = 0; i < productBoard.length; i++) {
+                if (
+                    productBoard[i]._id == productData._id &&
+                    productBoard[i].colorChoice != selectColor.value
+                ) {
+                    return (
+                        console.log("nouveau produit_couleur"),
+                        productBoard.push(finalProduct),
+                        localStorage.setItem("product", JSON.stringify(productBoard)),
                         (productBoard = JSON.parse(localStorage.getItem("product")))
                     );
                 }
