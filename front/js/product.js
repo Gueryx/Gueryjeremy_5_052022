@@ -90,7 +90,7 @@ const addBasket = () => {
             /*si le tableau n'est pas égale alors */
         } else if (productBoard != null) {
             for (i = 0; i < productBoard.length; i++) {
-                console.log("test");
+                console.log("test boucle pas égal à null");
 
                 /*si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué */
                 if (
@@ -115,7 +115,7 @@ const addBasket = () => {
                     productBoard[i].colorChoice != selectColor.value
                 ) {
                     return (
-                        console.log("nouveau produit_couleur"),
+                        console.log("nouvelle couleur du même id"),
                         productBoard.push(finalProduct),
                         localStorage.setItem("product", JSON.stringify(productBoard)),
                         (productBoard = JSON.parse(localStorage.getItem("product")))
