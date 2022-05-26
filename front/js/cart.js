@@ -42,7 +42,7 @@ const cartDisplay = async() => {
         <p>Total (<span id="totalQuantity">${product.quantityChoice}</span> articles) : <span id="totalPrice">${product.quantityChoice * product.price.toString().replace(/00/,"")}</span> €</p>
       </div>
     
-         `);
+         `).join("");
 
 
 

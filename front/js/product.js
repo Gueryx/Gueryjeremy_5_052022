@@ -111,11 +111,12 @@ const addBasket = () => {
             /*Si il on le même id mais pas la même couleur alors c'est un autre produit */
             for (i = 0; i < productBoard.length; i++) {
                 if (
-                    productBoard[i]._id == productData._id &&
-                    productBoard[i].colorChoice != selectColor.value
+                    (productBoard[i]._id == productData._id &&
+                        productBoard[i].colorChoice != selectColor.value) ||
+                    productBoard[i]._id != productData._id
                 ) {
                     return (
-                        console.log("nouvelle couleur du même id"),
+                        console.log("nouveau produit"),
                         productBoard.push(finalProduct),
                         localStorage.setItem("product", JSON.stringify(productBoard)),
                         (productBoard = JSON.parse(localStorage.getItem("product")))
@@ -125,6 +126,6 @@ const addBasket = () => {
         }
     });
 
-    /*récupérer les valeurs ajouté dans le produit tableau */
+    /*récupérer les valeurs ajouté dans le produit tableau, dans le localStorage/product*/
     return (productBoard = JSON.parse(localStorage.getItem("product")));
 };
