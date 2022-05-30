@@ -8,7 +8,7 @@ console.log(product);
 let productData = [];
 
 const fetchProduct = async() => {
-    /*async va chercher la reponse avant de passer à la suite */
+    //async va chercher la reponse avant de passer à la suite
     await fetch(`http://localhost:3000/api/products/${product}`)
         .then((res) => res.json()) /*reponse en .json*/
         .then((promise) => {
@@ -17,29 +17,29 @@ const fetchProduct = async() => {
             productData = promise;
 
         });
-    /*récuper les données sous un tableau - méthode fetch*/
+    //récuper les données sous un tableau - méthode fetch
 };
 
 const productDisplay = async() => {
     await fetchProduct();
 
-    /*appel au parent pour l'insertions des éléments ci-dessous*/
+    //appel au parent pour l'insertions des éléments ci-dessous
 
     let item = document.querySelector(".item");
 
-    /*ajout image dynamique */
+    //ajout image dynamique 
     item.querySelector(".item__img").insertAdjacentHTML("afterbegin", `<img src="${productData.imageUrl}" alt="Photographie d'un canapé ${productData.name}">`);
 
-    /*ajout nom du produit dynamique - en majuscule*/
+    //ajout nom du produit dynamique - en majuscule
     item.querySelector("#title").insertAdjacentHTML("afterbegin", `${productData.name.toUpperCase()}`);
 
-    /*ajout du prix dynamique*/
+    //ajout du prix dynamique
     item.querySelector("#price").insertAdjacentHTML("afterbegin", `<span>${productData.price.toString().replace(/0$/,"")} </span>`);
 
-    /*ajout description produit dynamique*/
+    //ajout description produit dynamique
     item.querySelector("#description").insertAdjacentHTML("afterbegin", `${productData.description}`);
 
-    /*ajout des options des couleurs dynamique*/
+    //ajout des options des couleurs dynamique
     item.querySelector("#colors").insertAdjacentHTML("beforeend", productData.colors.map(color => `<option value="${color}">${color}</option>`).join());
 
     addBasket(productData);
@@ -58,6 +58,7 @@ const addBasket = () => {
         let selectColor = document.getElementById("colors");
         let selectQuantity = document.getElementById("quantity");
 
+
         /*assigner des options à un objet ci-dessous */
         const finalProduct = {
             _id: productData._id,
@@ -66,36 +67,31 @@ const addBasket = () => {
             price: productData.price,
             colorChoice: selectColor.value,
             quantityChoice: Number(selectQuantity.value),
-
         };
 
-        /*récap du produit choisi ci-dessous*/
+        //récap du produit choisi ci-dessous
         console.log(finalProduct);
 
 
-        /*si le resultat est "null" alors.... */
+        //si le resultat est "null" alors.... 
         if (productBoard == null) {
-            /*sous forme de tableau ci-dessous */
+            //sous forme de tableau ci-dessous
             productBoard = [];
             productBoard.push(finalProduct);
             console.log(productBoard);
-            /*stockage des infos dans le localStorage ci-dessous */
+            //stockage des infos dans le localStorage ci-dessous
             localStorage.setItem("product", JSON.stringify(productBoard));
-            /*ouvrir la page panier, une fois ajouté au panier */
-            //window.location.assign("cart.html");
 
-            /*si le tableau n'est pas égale alors */
+            //si le tableau n'est pas égale alors 
         } else if (productBoard != null) {
             for (i = 0; i < productBoard.length; i++) {
                 console.log("test boucle pas égal à null");
 
-                /*si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué */
+                //si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué
                 if (
                     productBoard[i]._id == productData._id &&
                     productBoard[i].colorChoice == selectColor.value
                 ) {
-                    //ERREUR QUAND ON VEUT EN AJOUTER PLUSIEUR AVEC UN CHIFFRE DE 1 -100, 
-                    //CA EN AJOUTE QUE 1 A LA FOIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     return (
                         productBoard[i].quantityChoice += finalProduct.quantityChoice,
                         console.log("quantityChoice++"),
@@ -105,7 +101,7 @@ const addBasket = () => {
                     );
                 }
             }
-            /*Si il on le même id mais pas la même couleur alors c'est un autre produit */
+            //Si il on le même id mais pas la même couleur alors c'est un autre produit
             for (i = 0; i < productBoard.length; i++) {
                 if (
                     (productBoard[i]._id == productData._id &&
@@ -123,6 +119,6 @@ const addBasket = () => {
         }
     });
 
-    /*récupérer les valeurs ajouté dans le produit tableau, dans le localStorage/product*/
+    //récupérer les valeurs ajouté dans le produit tableau, dans le localStorage/product
     return (productBoard = JSON.parse(localStorage.getItem("product")));
 };

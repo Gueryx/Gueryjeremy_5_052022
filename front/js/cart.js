@@ -1,4 +1,4 @@
-/*renvoyer les données de l'ajout d'un produit sur cette page */
+// renvoyer les données de l'ajout d'un produit sur cette page
 let finalProduct = JSON.parse(localStorage.getItem("product"));
 
 if (!finalProduct) {
@@ -80,10 +80,15 @@ if (!finalProduct) {
         productQuantity.setAttribute("max", "100");
         productQuantity.setAttribute("name", "itemQuantity");
 
-        // Insertion quantitée final de tout les articles  PAS FINITOOOOO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // Insertion quantitée finaux PAS FINITOOOOO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         let finalQuantityChoice = document.createElement("span");
         totalQuantity.appendChild(finalQuantityChoice);
         finalQuantityChoice.innerHTML = finalProduct[i].quantityChoice;
+
+        // Insertion prix finaux PAS FINITOOOOOOOO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        let finalPriceChoice = document.createElement("span");
+        totalPrice.appendChild(finalPriceChoice);
+        finalPriceChoice.innerHTML = finalProduct[i].price;
 
         // Insertion de l'élément "div"
         let productItemContentSettingsDelete = document.createElement("div");
@@ -115,7 +120,7 @@ if (!finalProduct) {
             if (finalProduct.length === 0) {
                 localStorage.clear();
             }
-            //Refresh rapide de la page
+            // actualisation rapide de la page
             location.reload();
         });
     }
