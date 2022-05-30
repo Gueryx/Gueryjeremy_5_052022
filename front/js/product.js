@@ -63,13 +63,11 @@ const addBasket = () => {
 
         /*assigner des options à un objet ci-dessous */
 
+
         const finalProduct = {
             _id: productData._id,
-            colorChoice: `${selectColor.value}`,
-            quantityChoice: `${selectQuantity.value}`,
-            imageUrl: productData.imageUrl,
-            name: productData.name,
-            price: productData.price,
+            colorChoice: selectColor.value,
+            quantityChoice: Number(selectQuantity.value),
         };
 
         /*récap du produit choisi ci-dessous*/
@@ -100,7 +98,7 @@ const addBasket = () => {
                     //ERREUR QUAND ON VEUT EN AJOUTER PLUSIEUR AVEC UN CHIFFRE DE 1 -100, 
                     //CA EN AJOUTE QUE 1 A LA FOIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     return (
-                        productBoard[i].quantityChoice++,
+                        productBoard[i].quantityChoice += finalProduct.quantityChoice,
                         console.log("quantityChoice++"),
                         localStorage.setItem("product", JSON.stringify(productBoard)),
                         /*nouveau tableau dans le local storage à jour*/
