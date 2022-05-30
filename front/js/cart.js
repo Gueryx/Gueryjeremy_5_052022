@@ -2,6 +2,7 @@
 let finalProduct = JSON.parse(localStorage.getItem("product"));
 
 if (!finalProduct) {
+    //ajout d'un h1 si le panier est vide ("Votre panier est vide !!!")
     const titleCart = document.querySelector("h1");
     const sectionCart = document.querySelector(".cart");
 
