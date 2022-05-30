@@ -50,11 +50,8 @@ productDisplay();
 
 
 const addBasket = () => {
-    console.log(productData._id); /*test pour ravoir l'id */
-
     /*si on click sur "Ajouter au panier alors .... */
     document.querySelector("#addToCart").addEventListener("click", function() {
-
 
         /*ajouts variables pour avoir dans le local storage des données du produit selectionnées*/
         let productBoard = JSON.parse(localStorage.getItem("product"));
@@ -62,12 +59,14 @@ const addBasket = () => {
         let selectQuantity = document.getElementById("quantity");
 
         /*assigner des options à un objet ci-dessous */
-
-
         const finalProduct = {
             _id: productData._id,
+            imageUrl: productData.imageUrl,
+            name: productData.name,
+            price: productData.price,
             colorChoice: selectColor.value,
             quantityChoice: Number(selectQuantity.value),
+
         };
 
         /*récap du produit choisi ci-dessous*/
