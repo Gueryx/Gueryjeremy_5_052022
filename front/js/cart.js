@@ -103,7 +103,6 @@ if (!finalProduct) {
         }
         const priceTotal = priceTotalCalcul.reduce(reducer);
         console.log(priceTotal);
-
         let finalPriceChoice = document.querySelector("#totalPrice");
         finalPriceChoice.innerHTML = priceTotal;
 
