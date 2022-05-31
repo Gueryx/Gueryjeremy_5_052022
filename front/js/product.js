@@ -65,10 +65,6 @@ const addBasket = () => {
             quantityChoice: Number(selectQuantity.value),
         };
 
-        // Récap du produit choisi ci-dessous
-        console.log(finalProduct);
-
-
         // Si le resultat est "null" alors ...
         if (productBoard == null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
             //sous forme de tableau ci-dessous
