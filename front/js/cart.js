@@ -81,15 +81,31 @@ if (!finalProduct) {
         productQuantity.setAttribute("max", "100");
         productQuantity.setAttribute("name", "itemQuantity");
 
-        // Insertion quantitée finaux PAS FINITOOOOO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        let finalQuantityChoice = document.createElement("span");
-        totalQuantity.appendChild(finalQuantityChoice);
-        finalQuantityChoice.innerHTML = finalProduct[i].quantityChoice;
+        // Insertion quantitée finaux
+        let quantityTotalCalcul = [];
+        //Aller chercher les quantitées dans le panier
+        for (let q = 0; q < finalProduct.length; q++) {
+            let quantityTotalCart = finalProduct[q].quantityChoice;
+            quantityTotalCalcul.push(quantityTotalCart);
+        }
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+        const quantityTotal = quantityTotalCalcul.reduce(reducer);
+        console.log(quantityTotal);
+        let finalQuantityChoice = document.querySelector("#totalQuantity");
+        finalQuantityChoice.innerHTML = quantityTotal;
 
-        // Insertion prix finaux PAS FINITOOOOOOOO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        let finalPriceChoice = document.createElement("span");
-        totalPrice.appendChild(finalPriceChoice);
-        finalPriceChoice.innerHTML = finalProduct[i].price;
+        // Insertion prix finaux 
+        let priceTotalCalcul = [];
+        //Aller chercher les quantitées dans le panier
+        for (let p = 0; p < finalProduct.length; p++) {
+            let priceTotalCart = finalProduct[p].price * finalProduct[p].quantityChoice;
+            priceTotalCalcul.push(priceTotalCart);
+        }
+        const priceTotal = priceTotalCalcul.reduce(reducer);
+        console.log(priceTotal);
+
+        let finalPriceChoice = document.querySelector("#totalPrice");
+        finalPriceChoice.innerHTML = priceTotal;
 
         // Insertion de l'élément "div"
         let productItemContentSettingsDelete = document.createElement("div");
