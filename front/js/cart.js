@@ -130,7 +130,7 @@ if (!finalProduct) {
             localStorage.setItem('product', JSON.stringify(finalProduct));
 
             // avertir de la suppression et recharger la page
-            alert('Votre article a bien été supprimé.');
+            alert('Le produit à bien été supprimé, veuillez appuyer sur ok pour continuer.');
 
             //Si pas de produits dans le local storage on affiche que le panier est vide
             if (finalProduct.length === 0) {
