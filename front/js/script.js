@@ -6,7 +6,7 @@ async function kanapData() {
 }
 
 async function products() {
-    let article = await kanapData()
+    await kanapData()
         .then((productList) => {
             for (let i = 0; i < productList.length; i++) {
 
