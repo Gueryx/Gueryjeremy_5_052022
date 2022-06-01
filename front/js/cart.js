@@ -1,13 +1,13 @@
-// renvoyer les données de l'ajout d'un produit sur cette page
+// Renvoyer les données de l'ajout d'un produit sur cette page
 let finalProduct = JSON.parse(localStorage.getItem("product"));
 
 if (!finalProduct) {
-    //ajout d'un h1 si le panier est vide ("Votre panier est vide !!!")
+    // Ajout d'un h1 si le panier est vide ("Votre panier est vide !!!")
     const titleCart = document.querySelector("h1");
     const sectionCart = document.querySelector(".cart");
 
     titleCart.innerHTML = "Votre panier est vide !!!";
-    //on affiche pas la sectionCart si il y a pas de produit dans le panier
+    // On affiche pas la sectionCart si il y a pas de produit dans le panier
     sectionCart.style.display = "none";
 
 } else {
@@ -83,7 +83,7 @@ if (!finalProduct) {
 
         // Insertion quantitée finaux
         let quantityTotalCalcul = [];
-        //Aller chercher les quantitées dans le panier
+        // Aller chercher les quantitées dans le panier
         for (let q = 0; q < finalProduct.length; q++) {
             let quantityTotalCart = finalProduct[q].quantityChoice;
             quantityTotalCalcul.push(quantityTotalCart);
@@ -96,7 +96,7 @@ if (!finalProduct) {
 
         // Insertion prix finaux 
         let priceTotalCalcul = [];
-        //Aller chercher les quantitées dans le panier
+        // Aller chercher les quantitées dans le panier
         for (let p = 0; p < finalProduct.length; p++) {
             let priceTotalCart = finalProduct[p].price * finalProduct[p].quantityChoice;
             priceTotalCalcul.push(priceTotalCart);
@@ -119,25 +119,118 @@ if (!finalProduct) {
         productSupprimer.addEventListener("click", (e) => {
             e.preventDefault;
 
-            // enregistrer l'id et la couleur séléctionnés par le bouton supprimer
+            // Enregistrer l'id et la couleur séléctionnés par le bouton supprimer
             let deleteId = finalProduct[i]._id;
             let deleteColor = finalProduct[i].colorChoice;
 
-            // filtrer l'élément cliqué par le bouton supprimer
+            // Filtrer l'élément cliqué par le bouton supprimer
             finalProduct = finalProduct.filter(elt => elt._id !== deleteId || elt.colorChoice !== deleteColor);
 
-            // envoyer les nouvelles données dans le localStorage
+            // Envoyer les nouvelles données dans le localStorage
             localStorage.setItem('product', JSON.stringify(finalProduct));
 
-            // avertir de la suppression et recharger la page
+            // Avertir de la suppression et recharger la page
             alert('Le produit à bien été supprimé, veuillez appuyer sur ok pour continuer.');
 
-            //Si pas de produits dans le local storage on affiche que le panier est vide
+            // Si pas de produits dans le local storage on affiche que le panier est vide
             if (finalProduct.length === 0) {
                 localStorage.clear();
             }
-            // actualisation rapide de la page
+            // Actualisation rapide de la page
             location.reload();
         });
     }
 }
+
+//-----------------------------------------------------------------------Formulaire avec regex
+
+function getForm() {
+    // Ajout des Regex
+    let form = document.querySelector(".cart__order__form");
+
+    // Création des expressions régulières
+    let emailRegExp = new RegExp('^[\w.-_]+[@]{1}[\w.-_]+[.]{1}[a-z]{2,5}$');
+    let charRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
+    let addressRegExp = new RegExp("\b\d{1,8}(-)?[a-z]?\W[a-z|\W|\.]{1,}\W(route|rue|bis|drive|avenue|rdc|boulevard|circle|street|lane|way|rd\.|st\.|dr\.|ave\.|blvd\.|cir\.|ln\.|rd|dr|ave|blvd|cir|ln)");
+
+    // Prénom
+    form.firstName.addEventListener('change', function() {
+        validFirstName(this);
+    });
+
+    // Nom
+    form.lastName.addEventListener('change', function() {
+        validLastName(this);
+    });
+
+    // Adresse
+    form.address.addEventListener('change', function() {
+        validAddress(this);
+    });
+
+    // Ville
+    form.city.addEventListener('change', function() {
+        validCity(this);
+    });
+
+    // Mail
+    form.email.addEventListener('change', function() {
+        validEmail(this);
+    });
+
+    // Validation du prénom
+    const validFirstName = function(inputFirstName) {
+        let firstNameErrorMsg = inputFirstName.nextElementSibling;
+
+        if (charRegExp.test(inputFirstName.value)) {
+            firstNameErrorMsg.innerHTML = '';
+        } else {
+            firstNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+        }
+    };
+
+    // Validation du nom
+    const validLastName = function(inputLastName) {
+        let lastNameErrorMsg = inputLastName.nextElementSibling;
+
+        if (charRegExp.test(inputLastName.value)) {
+            lastNameErrorMsg.innerHTML = '';
+        } else {
+            lastNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+        }
+    };
+
+    // Validation de l'adresse
+    const validAddress = function(inputAddress) {
+        let addressErrorMsg = inputAddress.nextElementSibling;
+
+        if (addressRegExp.test(inputAddress.value)) {
+            addressErrorMsg.innerHTML = '';
+        } else {
+            addressErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+        }
+    };
+
+    // Validation de la ville
+    const validCity = function(inputCity) {
+        let cityErrorMsg = inputCity.nextElementSibling;
+
+        if (charRegExp.test(inputCity.value)) {
+            cityErrorMsg.innerHTML = '';
+        } else {
+            cityErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+        }
+    };
+
+    // Validation de l'email
+    const validEmail = function(inputEmail) {
+        let emailErrorMsg = inputEmail.nextElementSibling;
+
+        if (emailRegExp.test(inputEmail.value)) {
+            emailErrorMsg.innerHTML = '';
+        } else {
+            emailErrorMsg.innerHTML = 'Veuillez renseigner votre email.';
+        }
+    };
+}
+getForm();
