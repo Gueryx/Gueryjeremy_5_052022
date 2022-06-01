@@ -24,7 +24,7 @@ const productDisplay = async() => {
     let item = document.querySelector(".item");
 
     // Ajout image dynamique 
-    item.querySelector(".item__img").insertAdjacentHTML("afterbegin", `<img src="${productData.imageUrl}" alt="Photographie d'un canapé ${productData.name}">`);
+    item.querySelector(".item__img").insertAdjacentHTML("afterbegin", `<img src="${productData.imageUrl}" alt="${productData.altTxt}">`);
 
     // Ajout nom du produit dynamique - en majuscule
     item.querySelector("#title").insertAdjacentHTML("afterbegin", `${productData.name.toUpperCase()}`);
