@@ -1,9 +1,9 @@
-kanapData();
-
 async function kanapData() {
     let productList = await fetch("http://localhost:3000/api/products");
     return productList.json();
 }
+
+kanapData();
 
 async function products() {
     await kanapData()
