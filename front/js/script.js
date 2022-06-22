@@ -3,42 +3,29 @@ async function kanapData() {
     return productList.json();
 }
 
-kanapData();
-
 async function products() {
     await kanapData()
         .then((productList) => {
             for (let i = 0; i < productList.length; i++) {
 
-                // Insertion de l'élément dynamique "a"
-                let productLink = document.createElement("a");
-                document.querySelector(".items").appendChild(productLink);
-                productLink.href = `product.html?id=${productList[i]._id}`;
+                const article = document.createElement('a');
 
-                // Insertion de l'élément dynamique "article"
-                let productArticle = document.createElement("article");
-                productLink.appendChild(productArticle);
+                article.href = `product.html?id=${productList[i]._id}`;
 
-                // Insertion de l'image dynamique
-                let productImg = document.createElement("img");
-                productArticle.appendChild(productImg);
-                productImg.src = productList[i].imageUrl;
-                productImg.alt = productList[i].altTxt;
+                article.innerHTML = `
+                <article>
+                    <img src="${productList[i].imageUrl}" alt="${productList[i].name}"/>
+                    <h3 class="productName">${productList[i].name}</h3>
+                    <p class="productDescription">${productList[i].description}</p>
+                </article>
+                `;
 
-                // Insertion du titre dynamique "h3"
-                let productName = document.createElement("h3");
-                productArticle.appendChild(productName);
-                productName.classList.add("productName");
-                productName.innerHTML = productList[i].name;
+                document.getElementById("items").appendChild(article);
 
-                // Insertion de la description dynamique "p"
-                let productDescription = document.createElement("p");
-                productArticle.appendChild(productDescription);
-                productDescription.classList.add("productName");
-                productDescription.innerHTML = productList[i].description;
             }
         });
     console.log("ajout des produits dynamiquement");
 }
 
+kanapData();
 products();
