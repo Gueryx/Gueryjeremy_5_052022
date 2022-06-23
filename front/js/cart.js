@@ -14,12 +14,12 @@ if (!finalProduct) {
 
     for (let i = 0; i < finalProduct.length; i++) {
 
-        const product = document.createElement('article');
+        const parent = document.createElement('article');
 
-        product.innerHTML = `
+        parent.innerHTML = `
         <article class="cart__item" data-id="${finalProduct[i]._id}" data-color="${finalProduct[i].colorChoice}">
                 <div class="cart__item__img">
-                  <img src="${finalProduct[i].imageUrl}" alt="${finalProduct[i].name}">
+                  <img src="${finalProduct[i].imageUrl}" alt="${finalProduct[i].altTxt}">
                 </div>
                 <div class="cart__item__content">
                   <div class="cart__item__content__description">
@@ -40,7 +40,7 @@ if (!finalProduct) {
               </article>
         `;
 
-        document.getElementById('cart__items').appendChild(product);
+        document.getElementById('cart__items').appendChild(parent);
 
         // Insertion quantitée finaux
         let quantityTotalCalcul = [];

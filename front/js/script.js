@@ -8,19 +8,19 @@ async function products() {
         .then((productList) => {
             for (let i = 0; i < productList.length; i++) {
 
-                const article = document.createElement('a');
+                const parent = document.createElement('a');
 
-                article.href = `product.html?id=${productList[i]._id}`;
+                parent.href = `product.html?id=${productList[i]._id}`;
 
-                article.innerHTML = `
+                parent.innerHTML = `
                 <article>
-                    <img src="${productList[i].imageUrl}" alt="${productList[i].name}"/>
+                    <img src="${productList[i].imageUrl}" alt="${productList[i].altTxt}"/>
                     <h3 class="productName">${productList[i].name}</h3>
                     <p class="productDescription">${productList[i].description}</p>
                 </article>
                 `;
 
-                document.getElementById("items").appendChild(article);
+                document.getElementById("items").appendChild(parent);
 
             }
         });
