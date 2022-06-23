@@ -65,40 +65,51 @@ const addBasket = () => {
             quantityChoice: Number(selectQuantity.value),
         };
 
-        // Si le resultat est "null" alors ...
+        // Si le resultat est "null" alors....
         if (productBoard == null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
             // Sous forme de tableau ci-dessous
             productBoard = [];
             productBoard.push(finalProduct);
             console.log(productBoard);
-            // Stockage des infos dans le localStorage ci-dessous
+            // Tableau MAJ dans le localStorage
             localStorage.setItem("product", JSON.stringify(productBoard));
-            productBoard = JSON.parse(localStorage.getItem("product"))
 
-            // Si le tableau n'est pas égale alors ...
-        } else if (productBoard.length != null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
+
+            // Si le tableau n'est pas égale alors
+        } else if (productBoard != null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
             for (i = 0; i < productBoard.length; i++) {
-                // Si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué
+                // Si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué 
                 if (
                     productBoard[i]._id == productData._id &&
                     productBoard[i].colorChoice == selectColor.value
                 ) {
-                    productBoard[i].quantityChoice++;
-                    console.log("quantityChoice++");
-                    localStorage.setItem("product", JSON.stringify(productBoard));
-                    productBoard = JSON.parse(localStorage.getItem("product"))
-                } else if (
-                    productBoard[i].colorChoice != selectColor.value ||
+                    return (
+                        productBoard[i].quantityChoice = Number(selectQuantity.value) + productBoard[i].quantityChoice,
+                        console.log("ajout de", Number(selectQuantity.value), "produit(s) similaire"),
+                        localStorage.setItem("product", JSON.stringify(productBoard)),
+                        // Tableau MAJ dans le localStorage
+                        (productBoard = JSON.parse(localStorage.getItem("product")))
+                    );
+                }
+            }
+            // Si il on le même id mais pas la même couleur alors c'est un autre produit
+            for (i = 0; i < productBoard.length; i++) {
+                if (
+                    (productBoard[i]._id == productData._id &&
+                        productBoard[i].colorChoice != selectColor.value) ||
                     productBoard[i]._id != productData._id
                 ) {
-                    console.log("nouveau produit");
-                    productBoard.push(finalProduct);
-                    localStorage.setItem("product", JSON.stringify(productBoard));
-                    productBoard = JSON.parse(localStorage.getItem("product"))
+                    return (
+                        console.log("nouveau produit"),
+                        productBoard.push(finalProduct),
+                        localStorage.setItem("product", JSON.stringify(productBoard)),
+                        (productBoard = JSON.parse(localStorage.getItem("product")))
+                    );
                 }
             }
         }
     });
+
     // Récupérer les valeurs ajouté dans le produit tableau, dans le localStorage/product
     return (productBoard = JSON.parse(localStorage.getItem("product")));
 };
