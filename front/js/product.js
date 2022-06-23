@@ -2,6 +2,7 @@
 const product = new URL(window.location.href).searchParams.get("id");
 
 let productData = [];
+console.log(productData);
 
 const fetchProduct = async() => {
     // Async va chercher la reponse avant de passer à la suite
@@ -74,15 +75,14 @@ const addBasket = () => {
             // Tableau MAJ dans le localStorage
             localStorage.setItem("product", JSON.stringify(productBoard));
 
+            return (productBoard.quantityChoice = Number(selectQuantity.value));
+        }
 
-            // Si le tableau n'est pas égale alors
-        } else if (productBoard != null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
+        // Si le tableau n'est pas égale alors....
+        if (productBoard != null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
             for (i = 0; i < productBoard.length; i++) {
                 // Si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué 
-                if (
-                    productBoard[i]._id == productData._id &&
-                    productBoard[i].colorChoice == selectColor.value
-                ) {
+                if (productBoard[i]._id == productData._id && productBoard[i].colorChoice == selectColor.value) {
                     return (
                         productBoard[i].quantityChoice = Number(selectQuantity.value) + productBoard[i].quantityChoice,
                         console.log("ajout de", Number(selectQuantity.value), "produit(s) similaire"),
@@ -92,24 +92,8 @@ const addBasket = () => {
                     );
                 }
             }
-            // Si il on le même id mais pas la même couleur alors c'est un autre produit
-            for (i = 0; i < productBoard.length; i++) {
-                if (
-                    (productBoard[i]._id == productData._id &&
-                        productBoard[i].colorChoice != selectColor.value) ||
-                    productBoard[i]._id != productData._id
-                ) {
-                    return (
-                        console.log("nouveau produit"),
-                        productBoard.push(finalProduct),
-                        localStorage.setItem("product", JSON.stringify(productBoard)),
-                        (productBoard = JSON.parse(localStorage.getItem("product")))
-                    );
-                }
-            }
+            return (console.log("nouveau produit"), productBoard.push(finalProduct), localStorage.setItem("product", JSON.stringify(productBoard)), (productBoard = JSON.parse(localStorage.getItem("product"))));
         }
     });
-
-    // Récupérer les valeurs ajouté dans le produit tableau, dans le localStorage/product
-    return (productBoard = JSON.parse(localStorage.getItem("product")));
+    return ((productBoard = JSON.parse(localStorage.getItem("product"))));
 };
