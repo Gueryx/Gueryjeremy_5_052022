@@ -74,8 +74,9 @@ const addBasket = () => {
             console.log(productBoard);
             // Tableau MAJ dans le localStorage
             localStorage.setItem("product", JSON.stringify(productBoard));
+            productBoard.quantityChoice = Number(selectQuantity.value)
 
-            return (productBoard.quantityChoice = Number(selectQuantity.value));
+            return;
         }
 
         // Si le tableau n'est pas égale alors....
@@ -83,17 +84,20 @@ const addBasket = () => {
             for (i = 0; i < productBoard.length; i++) {
                 // Si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué 
                 if (productBoard[i]._id == productData._id && productBoard[i].colorChoice == selectColor.value) {
-                    return (
-                        productBoard[i].quantityChoice = Number(selectQuantity.value) + productBoard[i].quantityChoice,
-                        console.log("ajout de", Number(selectQuantity.value), "produit(s) similaire"),
-                        localStorage.setItem("product", JSON.stringify(productBoard)),
-                        // Tableau MAJ dans le localStorage
-                        (productBoard = JSON.parse(localStorage.getItem("product")))
-                    );
+                    productBoard[i].quantityChoice = Number(selectQuantity.value) + productBoard[i].quantityChoice;
+                    console.log("ajout de", Number(selectQuantity.value), "produit(s) similaire");
+                    localStorage.setItem("product", JSON.stringify(productBoard));
+                    // Tableau MAJ dans le localStorage
+                    productBoard = JSON.parse(localStorage.getItem("product"))
+                    return;
                 }
             }
-            return (console.log("nouveau produit"), productBoard.push(finalProduct), localStorage.setItem("product", JSON.stringify(productBoard)), (productBoard = JSON.parse(localStorage.getItem("product"))));
+            console.log("nouveau produit");
+            productBoard.push(finalProduct);
+            localStorage.setItem("product", JSON.stringify(productBoard));
+            (productBoard = JSON.parse(localStorage.getItem("product")));
+            return;
         }
     });
-    return ((productBoard = JSON.parse(localStorage.getItem("product"))));
+    productBoard = JSON.parse(localStorage.getItem("product"));
 };

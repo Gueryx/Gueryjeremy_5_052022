@@ -42,33 +42,8 @@ if (!finalProduct) {
 
         document.getElementById('cart__items').appendChild(parent);
 
-        // Insertion quantitée finaux
-        let quantityTotalCalcul = [];
-        // Aller chercher les quantitées dans le panier
-        for (let q = 0; q < finalProduct.length; q++) {
-            let quantityTotalCart = finalProduct[q].quantityChoice;
-            quantityTotalCalcul.push(quantityTotalCart);
-        }
-        const reducer = (accumulator, currentValue) => accumulator + currentValue;
-        const quantityTotal = quantityTotalCalcul.reduce(reducer);
-        console.log(quantityTotal);
-        let finalQuantityChoice = document.querySelector("#totalQuantity");
-        finalQuantityChoice.innerHTML = quantityTotal;
-
-        // Insertion prix finaux 
-        let priceTotalCalcul = [];
-        // Aller chercher les quantitées dans le panier
-        for (let p = 0; p < finalProduct.length; p++) {
-            let priceTotalCart = finalProduct[p].price * finalProduct[p].quantityChoice;
-            priceTotalCalcul.push(priceTotalCart);
-        }
-        const priceTotal = priceTotalCalcul.reduce(reducer);
-        console.log(priceTotal);
-        let finalPriceChoice = document.querySelector("#totalPrice");
-        finalPriceChoice.innerHTML = priceTotal;
-
         // Supprimer un article
-        let productSupprimer = document.querySelector(".deleteItem");
+        let productSupprimer = parent.querySelector(".deleteItem");
 
         productSupprimer.addEventListener("click", (e) => {
             e.preventDefault;
@@ -94,6 +69,34 @@ if (!finalProduct) {
             location.reload();
         });
     }
+
+
+
+
+    // Insertion quantitée finaux
+    let quantityTotalCalcul = [];
+    // Aller chercher les quantitées dans le panier
+    for (let q = 0; q < finalProduct.length; q++) {
+        let quantityTotalCart = finalProduct[q].quantityChoice;
+        quantityTotalCalcul.push(quantityTotalCart);
+    }
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const quantityTotal = quantityTotalCalcul.reduce(reducer);
+    console.log(quantityTotal);
+    let finalQuantityChoice = document.querySelector("#totalQuantity");
+    finalQuantityChoice.innerHTML = quantityTotal;
+
+    // Insertion prix finaux 
+    let priceTotalCalcul = [];
+    // Aller chercher les quantitées dans le panier
+    for (let p = 0; p < finalProduct.length; p++) {
+        let priceTotalCart = finalProduct[p].price * finalProduct[p].quantityChoice;
+        priceTotalCalcul.push(priceTotalCart);
+    }
+    const priceTotal = priceTotalCalcul.reduce(reducer);
+    console.log(priceTotal);
+    let finalPriceChoice = document.querySelector("#totalPrice");
+    finalPriceChoice.innerHTML = priceTotal;
 }
 
 //-----------------------------------------------------------------------Formulaire avec regex
