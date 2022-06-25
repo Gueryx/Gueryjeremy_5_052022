@@ -106,9 +106,9 @@ function getForm() {
     let form = document.querySelector(".cart__order__form");
 
     // Création des expressions régulières
-    let emailRegExp = new RegExp('^[\w.-_]+[@]{1}[\w.-_]+[.]{1}[a-z]{2,5}$');
-    let charRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
-    let addressRegExp = new RegExp("\b\d{1,8}(-)?[a-z]?\W[a-z|\W|\.]{1,}\W(route|rue|bis|drive|avenue|rdc|boulevard|circle|street|lane|way|rd\.|st\.|dr\.|ave\.|blvd\.|cir\.|ln\.|rd|dr|ave|blvd|cir|ln)");
+    let emailRegExp = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    let charRegExp = new RegExp("^[A-Z][A-Za-z\é\è\ê\-]+$");
+    let addressRegExp = new RegExp("((^[0-9]*).?((rue)|(bis)|(quartier))?)(([a-z\é\è\ê\]+.)*)(([a-z\è\é\ê\'']+.)*)$");
 
     // Prénom
     form.firstName.addEventListener('change', function() {
