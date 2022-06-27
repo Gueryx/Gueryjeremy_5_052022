@@ -75,7 +75,6 @@ const addBasket = () => {
             // Tableau MAJ dans le localStorage
             localStorage.setItem("product", JSON.stringify(productBoard));
             productBoard.quantityChoice = Number(selectQuantity.value)
-
             return;
         }
 

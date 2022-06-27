@@ -1,6 +1,7 @@
 // Renvoyer les données de l'ajout d'un produit sur cette page
 let finalProduct = JSON.parse(localStorage.getItem("product"));
 
+// L'opérateur logique NON (!...), amène le vrai au faux
 if (!finalProduct) {
     // Ajout d'un h1 si le panier est vide ("Votre panier est vide !!!")
     const titleCart = document.querySelector("h1");
@@ -70,9 +71,6 @@ if (!finalProduct) {
         });
     }
 
-
-
-
     // Insertion quantitée finaux
     let quantityTotalCalcul = [];
     // Aller chercher les quantitées dans le panier
@@ -80,6 +78,7 @@ if (!finalProduct) {
         let quantityTotalCart = finalProduct[q].quantityChoice;
         quantityTotalCalcul.push(quantityTotalCart);
     }
+
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const quantityTotal = quantityTotalCalcul.reduce(reducer);
     console.log(quantityTotal);
@@ -191,3 +190,52 @@ function getForm() {
     };
 }
 getForm();
+
+function postForm() {
+    const order = document.getElementById('order');
+    order.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        // Récuperer les données du formulaire dans un objet
+        const contact = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            email: document.getElementById('email').value
+        }
+
+        // Construction d'un array d'id depuis le local storage
+        let products = [];
+        for (let i = 0; i < finalProduct.length; i++) {
+            products.push(finalProduct[i]._id);
+        }
+        console.log(products);
+
+        // Mettre les valeurs du formulaire et les produits sélectionnés
+        // Dans un objet...
+        const sendFormData = {
+            contact,
+            products,
+        }
+
+        // Envoie le formulaire + localStorage (sendFormData) 
+        // Envoie au server
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(sendFormData),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        };
+
+        fetch("http://localhost:3000/api/products/order", options)
+            .then(res => res.json())
+            .then(promise => {
+                localStorage.setItem('orderId', promise.orderId);
+                document.location.href = 'confirmation.html?id=' + promise.orderId;
+            });
+
+    });
+}
+postForm();
