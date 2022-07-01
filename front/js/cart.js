@@ -192,8 +192,8 @@ function getForm() {
 getForm();
 
 function postForm() {
-    const order = document.getElementById('order');
-    order.addEventListener('click', (event) => {
+    const order = document.getElementsByClassName('cart__order__form')[0];
+    order.addEventListener('submit', (event) => {
         event.preventDefault();
 
         // Récuperer les données du formulaire dans un objet
@@ -204,6 +204,8 @@ function postForm() {
             city: document.getElementById('city').value,
             email: document.getElementById('email').value
         }
+
+        //-----------------------------------------Confirmation Regex à faire ici 
 
         // Construction d'un array d'id depuis le local storage
         let products = [];
