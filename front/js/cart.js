@@ -43,7 +43,7 @@ if (!finalProduct) {
 
         document.getElementById('cart__items').appendChild(parent);
 
-        // Supprimer un article
+        //------------------------------------------------------------------------------------------ Supprimer un article
         let productSupprimer = parent.querySelector(".deleteItem");
 
         productSupprimer.addEventListener("click", (e) => {
@@ -62,43 +62,65 @@ if (!finalProduct) {
             // Avertir de la suppression et recharger la page
             alert('Le produit à bien été supprimé, veuillez appuyer sur ok pour continuer.');
 
-            // Si pas de produits dans le local storage on affiche que le panier est vide
+            // Si pas de produits dans le localStorage, on affiche que le panier est vide
             if (finalProduct.length === 0) {
                 localStorage.clear();
             }
             // Actualisation rapide de la page
             location.reload();
         });
-    }
 
-    // Insertion quantitée finaux
-    let quantityTotalCalcul = [];
-    // Aller chercher les quantitées dans le panier
-    for (let q = 0; q < finalProduct.length; q++) {
-        let quantityTotalCart = finalProduct[q].quantityChoice;
-        quantityTotalCalcul.push(quantityTotalCart);
-    }
+        // ------------------------------------------------------------------------------------- Modification de la quantité d'un produit
+        let productModif = parent.querySelector(".itemQuantity");
 
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const quantityTotal = quantityTotalCalcul.reduce(reducer);
-    console.log(quantityTotal);
-    let finalQuantityChoice = document.querySelector("#totalQuantity");
-    finalQuantityChoice.innerHTML = quantityTotal;
+        productModif.addEventListener("change", (m) => {
+            m.preventDefault;
 
-    // Insertion prix finaux 
-    let priceTotalCalcul = [];
-    // Aller chercher les quantitées dans le panier
-    for (let p = 0; p < finalProduct.length; p++) {
-        let priceTotalCart = finalProduct[p].price * finalProduct[p].quantityChoice;
-        priceTotalCalcul.push(priceTotalCart);
+            // Enregistrer l'id et la couleur séléctionnés pour les modifs
+            let modifId = finalProduct[i]._id;
+            let modifColor = finalProduct[i].colorChoice;
+
+            // Filtrer l'élément modifié Qty
+            finalProduct = finalProduct.find(mlt => mlt._id !== modifId || mlt.colorChoice !== modifColor);
+
+            // Envoyer les nouvelles données dans le localStorage 
+            localStorage.setItem('product', JSON.stringify(finalProduct));
+
+            // Avertir de la modification et recharger la page
+            alert('La quantité à bien été modifiée, veuillez appuyer sur ok pour continuer.');
+
+            //Actualisation de la page 
+            location.reload();
+        });
+
+        // -------------------------------------------------------------------------------- Insertion quantitée finaux
+        let quantityTotalCalcul = [];
+        // Aller chercher les quantitées dans le panier
+        for (let q = 0; q < finalProduct.length; q++) {
+            let quantityTotalCart = finalProduct[q].quantityChoice;
+            quantityTotalCalcul.push(quantityTotalCart);
+        }
+        const reducerQuantity = (accumulator, currentValue) => accumulator + currentValue;
+        const quantityTotal = quantityTotalCalcul.reduce(reducerQuantity);
+        let finalQuantityChoice = document.querySelector("#totalQuantity");
+        finalQuantityChoice.innerHTML = quantityTotal;
+
+        // -------------------------------------------------------------------------------------- Insertion prix finaux 
+        let priceTotalCalcul = [];
+        // Aller chercher les quantitées dans le panier
+        for (let p = 0; p < finalProduct.length; p++) {
+            let priceTotalCart = finalProduct[p].price * finalProduct[p].quantityChoice;
+            priceTotalCalcul.push(priceTotalCart);
+        }
+        const reducerPrice = (accumulator, currentValue) => accumulator + currentValue;
+        const priceTotal = priceTotalCalcul.reduce(reducerPrice);
+        let finalPriceChoice = document.querySelector("#totalPrice");
+        finalPriceChoice.innerHTML = priceTotal;
+
     }
-    const priceTotal = priceTotalCalcul.reduce(reducer);
-    console.log(priceTotal);
-    let finalPriceChoice = document.querySelector("#totalPrice");
-    finalPriceChoice.innerHTML = priceTotal;
 }
 
-//-----------------------------------------------------------------------Formulaire avec regex
+//------------------------------------------------------------------------------------------ Formulaire avec regex
 
 function getForm() {
     // Ajout des Regex
@@ -205,7 +227,23 @@ function postForm() {
             email: document.getElementById('email').value
         }
 
-        //-----------------------------------------Confirmation Regex à faire ici 
+        //-----------------------------------------Confirmation Regex
+        /*
+                function validForm() {
+                    if (contact.firstName.value != "" && contact.lastName.value != "" && contact.address.value != "" &&
+                        contact.city.value != "" && contact.email.value != "") {
+                        // Les données sont ok, on peut envoyer le formulaire    
+                        return true;
+                    } else {
+                        // Sinon on affiche un message d'erreur
+                        alert("Saisissez correctement le formulaire.");
+                        //Actualisation de la page 
+                        location.reload();
+                        return false;
+                    }
+                }
+                validForm();
+        */
 
         // Construction d'un array d'id depuis le local storage
         let products = [];
