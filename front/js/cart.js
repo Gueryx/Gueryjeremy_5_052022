@@ -127,7 +127,7 @@ function getForm() {
     let form = document.querySelector(".cart__order__form");
 
     // Création des expressions régulières
-    let emailRegExp = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    let emailRegExp = new RegExp("^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$");
     let charRegExp = new RegExp("^[A-Z][A-Za-z\é\è\ê\-]+$");
     let addressRegExp = new RegExp("((^[0-9]*).?((rue)|(bis)|(quartier))?)(([a-z\é\è\ê\]+.)*)(([a-z\è\é\ê\'']+.)*)$");
 
@@ -161,7 +161,7 @@ function getForm() {
         let firstNameErrorMsg = inputFirstName.nextElementSibling;
 
         if (charRegExp.test(inputFirstName.value)) {
-            firstNameErrorMsg.innerHTML = '';
+            firstNameErrorMsg.innerHTML = 'Correct';
         } else {
             firstNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -172,7 +172,7 @@ function getForm() {
         let lastNameErrorMsg = inputLastName.nextElementSibling;
 
         if (charRegExp.test(inputLastName.value)) {
-            lastNameErrorMsg.innerHTML = '';
+            lastNameErrorMsg.innerHTML = 'Correct';
         } else {
             lastNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -183,7 +183,7 @@ function getForm() {
         let addressErrorMsg = inputAddress.nextElementSibling;
 
         if (addressRegExp.test(inputAddress.value)) {
-            addressErrorMsg.innerHTML = '';
+            addressErrorMsg.innerHTML = 'Correct';
         } else {
             addressErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -194,7 +194,7 @@ function getForm() {
         let cityErrorMsg = inputCity.nextElementSibling;
 
         if (charRegExp.test(inputCity.value)) {
-            cityErrorMsg.innerHTML = '';
+            cityErrorMsg.innerHTML = 'Correct';
         } else {
             cityErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -205,7 +205,7 @@ function getForm() {
         let emailErrorMsg = inputEmail.nextElementSibling;
 
         if (emailRegExp.test(inputEmail.value)) {
-            emailErrorMsg.innerHTML = '';
+            emailErrorMsg.innerHTML = 'Correct';
         } else {
             emailErrorMsg.innerHTML = 'Veuillez renseigner votre email.';
         }
@@ -228,22 +228,26 @@ function postForm() {
         }
 
         //-----------------------------------------Confirmation Regex
-        /*
-                function validForm() {
-                    if (contact.firstName.value != "" && contact.lastName.value != "" && contact.address.value != "" &&
-                        contact.city.value != "" && contact.email.value != "") {
-                        // Les données sont ok, on peut envoyer le formulaire    
-                        return true;
-                    } else {
-                        // Sinon on affiche un message d'erreur
-                        alert("Saisissez correctement le formulaire.");
-                        //Actualisation de la page 
-                        location.reload();
-                        return false;
-                    }
-                }
-                validForm();
-        */
+
+        function validForm() {
+            if (new RegExp("charRegExp").test(contact.firstName) &&
+                new RegExp("charRegExp").test(contact.lastName) &&
+                new RegExp("addressRegExp").test(contact.address) &&
+                new RegExp("charRegExp").test(contact.city) &&
+                new RegExp("emailRegExp").test(contact.email)) {
+                // Les données sont ok, on peut envoyer le formulaire    
+                form.submit();
+                //localStorage.setItem("sendFormData", JSON.stringify(sendFormData));
+                return;
+            } else {
+                // Sinon on affiche un message d'erreur
+                alert("Saisissez correctement le formulaire.");
+                //Actualisation de la page 
+                location.reload();
+                return;
+            }
+        };
+        validForm();
 
         // Construction d'un array d'id depuis le local storage
         let products = [];
