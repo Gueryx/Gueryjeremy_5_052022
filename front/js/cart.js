@@ -47,7 +47,7 @@ if (!finalProduct) {
         let productSupprimer = parent.querySelector(".deleteItem");
 
         productSupprimer.addEventListener("click", (e) => {
-            e.preventDefault;
+            e.preventDefault();
 
             // Enregistrer l'id et la couleur séléctionnés par le bouton supprimer
             let deleteId = finalProduct[i]._id;
@@ -71,17 +71,22 @@ if (!finalProduct) {
         });
 
         // ------------------------------------------------------------------------------------- Modification de la quantité d'un produit
-        let productModif = parent.querySelector(".itemQuantity");
 
-        productModif.addEventListener("change", (m) => {
-            m.preventDefault;
+        let productModif = document.querySelectorAll(".itemQuantity");
+
+        productModif[i].addEventListener("change", (m) => {
+            m.preventDefault();
 
             // Enregistrer l'id et la couleur séléctionnés pour les modifs
-            let modifId = finalProduct[i]._id;
-            let modifColor = finalProduct[i].colorChoice;
+            let modifQuantity = finalProduct[i].quantityChoice;
+            let modifValue = productModif[i].valueAsNumber;
 
-            // Filtrer l'élément modifié Qty
-            finalProduct = finalProduct.find(mlt => mlt._id !== modifId || mlt.colorChoice !== modifColor);
+            // Filtrer l'élément modifié Qty 
+            const resultFind = finalProduct.find(mlt => mlt.modifValue !== modifQuantity);
+
+            // MAJ des données
+            resultFind.quantityChoice = modifValue;
+            finalProduct[i].quantityChoice = resultFind.quantityChoice;
 
             // Envoyer les nouvelles données dans le localStorage 
             localStorage.setItem('product', JSON.stringify(finalProduct));
