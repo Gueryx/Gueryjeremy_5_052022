@@ -235,11 +235,11 @@ function postForm() {
         //-----------------------------------------Confirmation Regex
 
         function validForm() {
-            if (new RegExp("charRegExp").test(contact.firstName) &&
-                new RegExp("charRegExp").test(contact.lastName) &&
-                new RegExp("addressRegExp").test(contact.address) &&
-                new RegExp("charRegExp").test(contact.city) &&
-                new RegExp("emailRegExp").test(contact.email)) {
+            if (RegExp.charRegExp.test(contact.firstName) &&
+                RegExp.charRegExp.test(contact.lastName) &&
+                RegExp.addressRegExp.test(contact.address) &&
+                RegExp.charRegExp.test(contact.city) &&
+                RegExp.emailRegExp.test(contact.email)) {
                 // Les données sont ok, on peut envoyer le formulaire    
                 form.submit();
                 //localStorage.setItem("sendFormData", JSON.stringify(sendFormData));
