@@ -59,9 +59,6 @@ const addBasket = () => {
         // Assigner des options à un objet ci-dessous 
         const finalProduct = {
             _id: productData._id,
-            imageUrl: productData.imageUrl,
-            name: productData.name,
-            price: productData.price,
             colorChoice: selectColor.value,
             quantityChoice: Number(selectQuantity.value),
         };
