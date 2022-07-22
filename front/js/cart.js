@@ -43,7 +43,7 @@ if (!finalProduct) {
 
         document.getElementById('cart__items').appendChild(parent);
 
-        //------------------------------------------------------------------------------------------ Supprimer un article
+        //-----------------------------------------Supprimer un article
         let productSupprimer = parent.querySelector(".deleteItem");
 
         productSupprimer.addEventListener("click", (e) => {
@@ -70,7 +70,7 @@ if (!finalProduct) {
             location.reload();
         });
 
-        // ------------------------------------------------------------------------------------- Modification de la quantité d'un produit
+        // ----------------------------------------Modification de la quantité d'un produit
 
         let productModif = document.querySelectorAll(".itemQuantity");
 
@@ -98,7 +98,7 @@ if (!finalProduct) {
             location.reload();
         });
 
-        // -------------------------------------------------------------------------------- Insertion quantitée finaux
+        // ----------------------------------------Insertion quantitée finaux
         let quantityTotalCalcul = [];
         // Aller chercher les quantitées dans le panier
         for (let q = 0; q < finalProduct.length; q++) {
@@ -110,7 +110,7 @@ if (!finalProduct) {
         let finalQuantityChoice = document.querySelector("#totalQuantity");
         finalQuantityChoice.innerHTML = quantityTotal;
 
-        // -------------------------------------------------------------------------------------- Insertion prix finaux 
+        // ----------------------------------------Insertion prix finaux 
         let priceTotalCalcul = [];
         // Aller chercher les quantitées dans le panier
         for (let p = 0; p < finalProduct.length; p++) {
@@ -125,16 +125,16 @@ if (!finalProduct) {
     }
 }
 
-//------------------------------------------------------------------------------------------ Formulaire avec regex
+//-------------------------------------------------Formulaire avec Regex
 
 function getForm() {
-    // Ajout des Regex
+
     let form = document.querySelector(".cart__order__form");
 
     // Création des expressions régulières
-    let emailRegExp = new RegExp("^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$");
-    let charRegExp = new RegExp("^[A-Z][A-Za-z\é\è\ê\-]+$");
-    let addressRegExp = new RegExp("((^[0-9]*).?((rue)|(bis)|(quartier))?)(([a-z\é\è\ê\]+.)*)(([a-z\è\é\ê\'']+.)*)$");
+    let emailRegExp = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+    let charRegExp = /^[A-Z][A-Za-z\é\è\ê\-]+$/;
+    let addressRegExp = /((^[0-9]*).?((rue)|(bis)|(quartier))?)(([a-z\é\è\ê\]+.)*)(([a-z\è\é\ê\'']+.)*)$/;
 
     // Prénom
     form.firstName.addEventListener('change', function() {
@@ -166,7 +166,7 @@ function getForm() {
         let firstNameErrorMsg = inputFirstName.nextElementSibling;
 
         if (charRegExp.test(inputFirstName.value)) {
-            firstNameErrorMsg.innerHTML = 'Correct';
+            firstNameErrorMsg.innerHTML = '';
         } else {
             firstNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -177,7 +177,7 @@ function getForm() {
         let lastNameErrorMsg = inputLastName.nextElementSibling;
 
         if (charRegExp.test(inputLastName.value)) {
-            lastNameErrorMsg.innerHTML = 'Correct';
+            lastNameErrorMsg.innerHTML = '';
         } else {
             lastNameErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -188,7 +188,7 @@ function getForm() {
         let addressErrorMsg = inputAddress.nextElementSibling;
 
         if (addressRegExp.test(inputAddress.value)) {
-            addressErrorMsg.innerHTML = 'Correct';
+            addressErrorMsg.innerHTML = '';
         } else {
             addressErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -199,7 +199,7 @@ function getForm() {
         let cityErrorMsg = inputCity.nextElementSibling;
 
         if (charRegExp.test(inputCity.value)) {
-            cityErrorMsg.innerHTML = 'Correct';
+            cityErrorMsg.innerHTML = '';
         } else {
             cityErrorMsg.innerHTML = 'Veuillez renseigner ce champ.';
         }
@@ -210,15 +210,12 @@ function getForm() {
         let emailErrorMsg = inputEmail.nextElementSibling;
 
         if (emailRegExp.test(inputEmail.value)) {
-            emailErrorMsg.innerHTML = 'Correct';
+            emailErrorMsg.innerHTML = '';
         } else {
             emailErrorMsg.innerHTML = 'Veuillez renseigner votre email.';
         }
     };
-}
-getForm();
 
-function postForm() {
     const order = document.getElementsByClassName('cart__order__form')[0];
     order.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -232,37 +229,13 @@ function postForm() {
             email: document.getElementById('email').value
         }
 
-        //-----------------------------------------Confirmation Regex
-
-        function validForm() {
-            if (RegExp.charRegExp.test(contact.firstName) &&
-                RegExp.charRegExp.test(contact.lastName) &&
-                RegExp.addressRegExp.test(contact.address) &&
-                RegExp.charRegExp.test(contact.city) &&
-                RegExp.emailRegExp.test(contact.email)) {
-                // Les données sont ok, on peut envoyer le formulaire    
-                form.submit();
-                //localStorage.setItem("sendFormData", JSON.stringify(sendFormData));
-                return;
-            } else {
-                // Sinon on affiche un message d'erreur
-                alert("Saisissez correctement le formulaire.");
-                //Actualisation de la page 
-                location.reload();
-                return;
-            }
-        };
-        validForm();
-
         // Construction d'un array d'id depuis le local storage
         let products = [];
         for (let i = 0; i < finalProduct.length; i++) {
             products.push(finalProduct[i]._id);
         }
-        console.log(products);
 
-        // Mettre les valeurs du formulaire et les produits sélectionnés
-        // Dans un objet...
+        // Mettre les valeurs du formulaire et les produits sélectionnés dans un objet
         const sendFormData = {
             contact,
             products,
@@ -285,6 +258,22 @@ function postForm() {
                 document.location.href = 'confirmation.html?id=' + promise.orderId;
             });
 
+        //-----------------------------------------Confirmation du formulaire, conformément aux Regex
+        if (charRegExp.test(contact.firstName) &&
+            charRegExp.test(contact.lastName) &&
+            addressRegExp.test(contact.address) &&
+            charRegExp.test(contact.city) &&
+            emailRegExp.test(contact.email)) {
+            // Les données sont ok, on peut envoyer le formulaire    
+            return;
+        } else {
+            // Sinon on affiche un message d'erreur
+            alert("Saisissez correctement le formulaire.");
+            //Actualisation de la page 
+            location.reload();
+            return;
+        };
+
     });
 }
-postForm();
+getForm();
