@@ -1,6 +1,8 @@
+// Fonction asynchrone qui contient une boucle d'évènement suivant :
 async function main() {
 
-    // Renvoyer les données de l'ajout d'un produit sur cette page
+    // Récuperer les données du localStorage
+    // Renvoie les données de(s) l'ajout(s) d'un/des produit(s) sur cette page
     let finalProduct = JSON.parse(localStorage.getItem("product"));
     console.log(finalProduct);
     async function kanapData() {
@@ -22,13 +24,15 @@ async function main() {
 
     } else {
 
+        // Récupérations des informations sur le/les produit(s)
         let apiProducts = await kanapData();
 
         for (let apiProduct of apiProducts) {
             // Boucler sur les produits de finalProduct
             for (let productInStorage of finalProduct) {
-                // Si apiProduct._id == au produit de finalProduct alors rajouter dedans les informations le concernant
+                // Si ils ont le même id alors
                 if (apiProduct._id == productInStorage._id) {
+                    // Les informations à récuperer 
                     productInStorage.price = apiProduct.price;
                     productInStorage.name = apiProduct.name;
                     productInStorage.imageUrl = apiProduct.imageUrl;
@@ -36,6 +40,7 @@ async function main() {
             }
         }
 
+        // Boucle for, si ils sont dans le finalProduct alors on vient afficher les produits dynamiquement et on vient créer un element 'article' et son parent est = au inner.HTML ci-dessous
         for (let i = 0; i < finalProduct.length; i++) {
 
             const parent = document.createElement('article');
@@ -66,9 +71,10 @@ async function main() {
 
             document.getElementById('cart__items').appendChild(parent);
 
-            //-----------------------------------------Supprimer un article
+            //------------------------------------------------------------------------ Supprimer un article
             let productSupprimer = parent.querySelector(".deleteItem");
 
+            // Suite à un évènement au 'click' pour la suppression d'un article
             productSupprimer.addEventListener("click", (e) => {
                 e.preventDefault();
 
@@ -93,10 +99,11 @@ async function main() {
                 location.reload();
             });
 
-            // ----------------------------------------Modification de la quantité d'un produit
+            // ----------------------------------------------------------------------- Modification de la quantité d'un produit
 
             let productModif = document.querySelectorAll(".itemQuantity");
 
+            // Suite à un évènement au 'change' pour la modification de la quantité d'un article
             productModif[i].addEventListener("change", (m) => {
                 m.preventDefault();
 
@@ -121,29 +128,32 @@ async function main() {
                 location.reload();
             });
 
-            // ----------------------------------------Insertion quantitée finaux
-            // ----------------------------------------Insertion prix finaux 
+            // ---------------------------------------------------------------------- Insertion quantitée finaux
+            // ---------------------------------------------------------------------- Insertion prix finaux 
 
+            // Array
             let quantityTotalCalcul = [];
             let priceTotalCalcul = [];
 
-            // Aller chercher les quantitées dans le panier
+            // Aller chercher les quantitées et les prix dans le panier
             for (let q = 0; q < finalProduct.length; q++) {
 
+                // Les quantitées
                 let quantityTotalCart = finalProduct[q].quantityChoice;
                 quantityTotalCalcul.push(quantityTotalCart);
 
+                // Les prix finaux, le prix multiplié par la quantitée
                 let priceTotalCart = finalProduct[q].price * finalProduct[q].quantityChoice;
                 priceTotalCalcul.push(priceTotalCart);
             }
 
-            // Aller chercher les prix dans le panier
+            // Calculer les prix dans le panier
             const reducerQuantity = (accumulator, currentValue) => accumulator + currentValue;
             const quantityTotal = quantityTotalCalcul.reduce(reducerQuantity);
             let finalQuantityChoice = document.querySelector("#totalQuantity");
             finalQuantityChoice.innerHTML = quantityTotal;
 
-            // Aller chercher les quantitées dans le panier
+            // Calculer les quantitées dans le panier
             const reducerPrice = (accumulator, currentValue) => accumulator + currentValue;
             const priceTotal = priceTotalCalcul.reduce(reducerPrice);
             let finalPriceChoice = document.querySelector("#totalPrice");
@@ -153,10 +163,12 @@ async function main() {
     }
     getForm();
 };
-//-------------------------------------------------Formulaire avec Regex
+//------------------------------------------------------------------------------------ Formulaire avec Regex
 
+// Fonction getForm qui contient une boucle d'évènement suivant :
 function getForm() {
 
+    // On vient séléctionner l'id ou la class d'un élément
     let form = document.querySelector(".cart__order__form");
 
     // Création des expressions régulières
@@ -164,6 +176,7 @@ function getForm() {
     let charRegExp = /^[A-Z][A-Za-z\é\è\ê\-]+$/;
     let addressRegExp = /((^[0-9]*).?((rue)|(bis)|(quartier))?)(([a-z\é\è\ê\]+.)*)(([a-z\è\é\ê\'']+.)*)$/;
 
+    // Évènement au 'change'
     // Prénom
     form.firstName.addEventListener('change', function() {
         validFirstName(this);
@@ -189,6 +202,7 @@ function getForm() {
         validEmail(this);
     });
 
+    // On vient voir si les champs sont remplis
     // Validation du prénom
     const validFirstName = function(inputFirstName) {
         let firstNameErrorMsg = inputFirstName.nextElementSibling;
@@ -244,6 +258,8 @@ function getForm() {
         }
     };
 
+    // On vient séléctionner l'id ou la class d'un élément
+    // Dû à un évènement au 'submit' du formulaire on vient ...
     const order = document.getElementsByClassName('cart__order__form')[0];
     order.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -257,8 +273,11 @@ function getForm() {
             email: document.getElementById('email').value
         }
 
-        // Construction d'un array d'id depuis le local storage
+        // Construction d'un array depuis le localStorage
         let products = [];
+        // Récuperer les données du localStorage "product"
+        let finalProduct = JSON.parse(localStorage.getItem("product"));
+        // Mettre les id dans le finalProduct
         for (let i = 0; i < finalProduct.length; i++) {
             products.push(finalProduct[i]._id);
         }
@@ -279,7 +298,7 @@ function getForm() {
             }
         };
 
-        //-----------------------------------------Confirmation du formulaire, conformément aux Regex
+        //----------------------------------------------------------------------------- Confirmation du formulaire, conformément aux Regex
         if (!charRegExp.test(contact.firstName) ||
             !charRegExp.test(contact.lastName) ||
             !addressRegExp.test(contact.address) ||
@@ -289,6 +308,7 @@ function getForm() {
             return;
         };
 
+        // Récupérations des ressources à travers le réseau ce qui nous envoie vers la page de confirmation
         fetch("http://localhost:3000/api/products/order", options)
             .then(res => res.json())
             .then(promise => {

@@ -1,8 +1,11 @@
+// Fonction asynchrone - qui exécute de façon asynchrone grâce à la boucle d'évènement
+// Puis on dialogue avec l'API avec la méthode fetch
 async function kanapData() {
     let productList = await fetch("http://localhost:3000/api/products");
     return productList.json();
 }
 
+// Fonction asynchrone qui va chercher la boucle d'évènement via une promise "productList", puis on vient afficher dynamiquement les produits via un inner.HTML
 async function products() {
     await kanapData()
         .then((productList) => {

@@ -1,11 +1,12 @@
-// Récup l'id via l'url
+// Récupération de l'URL du produit ciblé
 const product = new URL(window.location.href).searchParams.get("id");
 
+// Array 
 let productData = [];
 console.log(productData);
 
+// On dialogue depuis l'API avec la méthode fetch, pour récuperer les caractéristiques du produit en question
 const fetchProduct = async() => {
-    // Async va chercher la reponse avant de passer à la suite
     await fetch(`http://localhost:3000/api/products/${product}`)
         .then((res) => res.json()) //Reponse en .json
         .then((promise) => {
@@ -14,9 +15,9 @@ const fetchProduct = async() => {
             productData = promise;
 
         });
-    // Récuper les données sous un tableau - méthode fetch
 };
 
+// Affichage dynamiquement des détails du produits en question 
 const productDisplay = async() => {
     await fetchProduct();
 
@@ -47,7 +48,8 @@ productDisplay();
 
 
 const addBasket = () => {
-    // Si on click sur "Ajouter au panier alors .... 
+
+    // Fonction au "click" pour l'ajout au panier du produit
     document.querySelector("#addToCart").addEventListener("click", function() {
 
         // Ajouts variables pour avoir dans le local storage des données du produit selectionnées
@@ -59,14 +61,11 @@ const addBasket = () => {
         // Assigner des options à un objet ci-dessous 
         const finalProduct = {
             _id: productData._id,
-            imageUrl: productData.imageUrl,
-            name: productData.name,
-            price: productData.price,
             colorChoice: selectColor.value,
             quantityChoice: Number(selectQuantity.value),
         };
 
-        // Si le resultat est "null" alors....
+        // Si le resultat du productBoard est "null" alors... On vient l'ajouter dans le localStorage
         if (productBoard == null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
             // Sous forme de tableau ci-dessous
             productBoard = [];
@@ -78,7 +77,8 @@ const addBasket = () => {
             return;
         }
 
-        // Si le tableau n'est pas égale alors....
+        // Si le resultat du productBoard n'est pas égale à null alors... (qui à déjà un produit dedans) 
+        // On vient alors l'ajouter ou augmanter sa qté selon le produit séléctionné et on le push dans le localStorage et on met ce dernier à jour
         if (productBoard != null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
             for (i = 0; i < productBoard.length; i++) {
                 // Si le même produit et la même teinte sont ajouté alors il se cumule et non dubliqué 
