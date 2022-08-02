@@ -10,8 +10,6 @@ async function main() {
         return productList.json();
     }
 
-
-
     // L'opérateur logique NON (!...), amène le vrai au faux
     if (!finalProduct) {
         // Ajout d'un h1 si le panier est vide ("Votre panier est vide !!!")
@@ -163,6 +161,7 @@ async function main() {
     }
     getForm();
 };
+
 //------------------------------------------------------------------------------------ Formulaire avec Regex
 
 // Fonction getForm qui contient une boucle d'évènement suivant :
