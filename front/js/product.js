@@ -3,14 +3,12 @@ const product = new URL(window.location.href).searchParams.get("id");
 
 // Array 
 let productData = [];
-console.log(productData);
 
 // On dialogue depuis l'API avec la méthode fetch, pour récuperer les caractéristiques du produit en question
 const fetchProduct = async() => {
     await fetch(`http://localhost:3000/api/products/${product}`)
         .then((res) => res.json()) //Reponse en .json
         .then((promise) => {
-            console.log(promise);
 
             productData = promise;
 
@@ -21,7 +19,7 @@ const fetchProduct = async() => {
 const productDisplay = async() => {
     await fetchProduct();
 
-    // Appel au parent pour l'insertions des éléments ci-dessous
+    // Appel de la class ".item" pour l'insertions des éléments ci-dessous de façon dynamique 
 
     let item = document.querySelector(".item");
 

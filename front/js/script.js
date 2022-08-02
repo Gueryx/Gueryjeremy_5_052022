@@ -1,4 +1,4 @@
-// Fonction asynchrone - qui exécute de façon asynchrone grâce à la boucle d'évènement
+// Fonction asynchrone - qui retourne une promesse
 // Puis on dialogue avec l'API avec la méthode fetch
 async function kanapData() {
     let productList = await fetch("http://localhost:3000/api/products");
