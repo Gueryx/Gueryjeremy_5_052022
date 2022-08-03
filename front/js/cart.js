@@ -30,7 +30,7 @@ async function main() {
             for (let productInStorage of finalProduct) {
                 // Si ils ont le même id alors
                 if (apiProduct._id == productInStorage._id) {
-                    // Les informations à récuperer 
+                    // Les informations à récuperer qui vont nous servire à afficher le/les produit.s correctement 
                     productInStorage.price = apiProduct.price;
                     productInStorage.name = apiProduct.name;
                     productInStorage.imageUrl = apiProduct.imageUrl;
@@ -38,7 +38,7 @@ async function main() {
             }
         }
 
-        // Boucle for, si ils sont dans le finalProduct alors on vient afficher les produits dynamiquement et on vient créer un element 'article' et son parent est = au inner.HTML ci-dessous
+        // Boucle for, si ils sont dans le finalProduct.length alors on vient afficher les produits dynamiquement et on vient créer un element 'article' et son parent est = au inner.HTML ci-dessous
         for (let i = 0; i < finalProduct.length; i++) {
 
             const parent = document.createElement('article');
@@ -201,7 +201,7 @@ function getForm() {
         validEmail(this);
     });
 
-    // On vient voir si les champs sont remplis
+    // On vient vérifier si les champs sont remplis
     // Validation du prénom
     const validFirstName = function(inputFirstName) {
         let firstNameErrorMsg = inputFirstName.nextElementSibling;
@@ -257,8 +257,8 @@ function getForm() {
         }
     };
 
+    // Évènement au 'submit' du formulaire on vient ...
     // On vient séléctionner l'id ou la class d'un élément
-    // Dû à un évènement au 'submit' du formulaire on vient ...
     const order = document.getElementsByClassName('cart__order__form')[0];
     order.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -272,9 +272,9 @@ function getForm() {
             email: document.getElementById('email').value
         }
 
-        // Construction d'un array depuis le localStorage
+        // Construction d'un tableau dans le localStorage
         let products = [];
-        // Récuperer les données du localStorage "product"
+        // Mettre les données dans le localStorage nomé "product"
         let finalProduct = JSON.parse(localStorage.getItem("product"));
         // Mettre les id dans le finalProduct
         for (let i = 0; i < finalProduct.length; i++) {
@@ -298,6 +298,7 @@ function getForm() {
         };
 
         //----------------------------------------------------------------------------- Confirmation du formulaire, conformément aux Regex
+        // Opérateur logique NON, qui amène le vrai au faux
         if (!charRegExp.test(contact.firstName) ||
             !charRegExp.test(contact.lastName) ||
             !addressRegExp.test(contact.address) ||

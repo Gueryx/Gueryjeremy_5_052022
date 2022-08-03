@@ -4,10 +4,11 @@ const product = new URL(window.location.href).searchParams.get("id");
 // Array 
 let productData = [];
 
-// On dialogue depuis l'API avec la méthode fetch, pour récuperer les caractéristiques du produit en question
+// On dialogue depuis l'API avec la méthode fetch, pour récuperer les informations du produit en question
 const fetchProduct = async() => {
     await fetch(`http://localhost:3000/api/products/${product}`)
-        .then((res) => res.json()) //Reponse en .json
+        // .then() renvoie un objet promesse
+        .then((res) => res.json())
         .then((promise) => {
 
             productData = promise;
