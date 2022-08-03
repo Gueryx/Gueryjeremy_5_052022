@@ -272,7 +272,7 @@ function getForm() {
             email: document.getElementById('email').value
         }
 
-        // Construction d'un tableau dans le localStorage
+        // Array
         let products = [];
         // Mettre les données dans le localStorage nomé "product"
         let finalProduct = JSON.parse(localStorage.getItem("product"));
