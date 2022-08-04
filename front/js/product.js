@@ -64,6 +64,17 @@ const addBasket = () => {
             quantityChoice: Number(selectQuantity.value),
         };
 
+        // Saisies des champs / quantité & la couleur
+        if (selectQuantity.value == 0) {
+            alert("Veuillez selectionner la quantité souhaitée.");
+            return;
+        }
+        if (selectColor.value == 0) {
+            alert("Veuillez renseigner la couleur de l'article.");
+            return;
+        }
+
+
         // Si le resultat du productBoard est "null" alors... On vient l'ajouter dans le localStorage
         if (productBoard == null && selectQuantity.value > 0 && selectQuantity.value <= 100 && selectQuantity.value != 0 && selectColor.value != 0) {
             // Sous forme de tableau ci-dessous
