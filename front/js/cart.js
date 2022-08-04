@@ -175,7 +175,7 @@ function getForm() {
     let charRegExp = /^[A-Z][A-Za-z\é\è\ê\-]+$/;
     let addressRegExp = /((^[0-9]*).?((rue)|(bis)|(quartier))?)(([a-z\é\è\ê\]+.)*)(([a-z\è\é\ê\'']+.)*)$/;
 
-    // Évènement au 'change'
+    // ------------------------------------------------------------------------------ Vérification des saisies 
     // Prénom
     form.firstName.addEventListener('change', function() {
         validFirstName(this);
